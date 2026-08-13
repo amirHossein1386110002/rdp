@@ -9,8 +9,7 @@ steps:
 - name: Configure Core RDP Settings
 run: |
 # Enable Remote Desktop and disable Network Level Authentication (if needed)
-Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal
-Server\WinStations\RDP-Tcp' `
+Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal Server' `
 -Name "fDenyTSConnections" -Value 0 -Force
 Set-ItemProperty -Path 'HKLM:\System\CurrentControlSet\Control\Terminal
 Server\WinStations\RDP-Tcp' `
@@ -35,8 +34,7 @@ Number = [char[]](48..57) # 0-9
 Special = ([char[]](33..47) + [char[]](58..64) +
 [char[]](91..96) + [char[]](123..126)) # Special characters
 }
-$rawPassword = @()
-$rawPassword += $charSet.Upper | Get-Random -Count 4
+$rawPassword = @() $rawPassword += $charSet.Upper | Get-Random -Count 4
 $rawPassword += $charSet.Lower | Get-Random -Count 4
 $rawPassword += $charSet.Number | Get-Random -Count 4
 $rawPassword += $charSet.Special | Get-Random -Count 4
@@ -72,8 +70,7 @@ Start-Sleep -Seconds 5
 $retries++
 }
 if (-not $tsIP) {
-Write-Error "Tailscale IP not assigned. Exiting."
-exit 1
+Write-Error "Tailscale IP not assigned. Exiting." exit 1
 }
 echo "TAILSCALE_IP=$tsIP" >> $env:GITHUB_ENV
 - name: Verify RDP Accessibility
